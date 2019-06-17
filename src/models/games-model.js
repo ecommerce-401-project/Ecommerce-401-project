@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const Game = require('./games-schema');
+const Game = require("./games-schema");
 
 class GameRepository {
   //uses find() from mongoose to return everthing in the game.
   getAll() {
-    return Promise.resolve(Game.find());
+    return Promise.resolve(Game.find({ approved: true }));
   }
   //use find with the param id to return specific thing
   async getById(_id) {

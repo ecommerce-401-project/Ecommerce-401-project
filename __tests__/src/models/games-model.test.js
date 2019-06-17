@@ -27,4 +27,23 @@ describe('Data-modeling', () => {
     expect(getId.name).toBe('Fort Nite');
     expect(getId.approved).toBe(false);
   });
+
+  it('should only return approved games', async () => {
+    await game.create({
+      name: 'Approved Game',
+      genre: 'Approved Games',
+      creator: 'Publisher',
+      approved: true,
+    });
+    await game.create({
+      name: 'Not Approved Game',
+      genre: 'Not Approved Games',
+      creator: 'Publisher',
+    });
+
+    var result = await game.getAll();
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('Approved Game');
+    
+  });
 });
