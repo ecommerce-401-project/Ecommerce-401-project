@@ -8,7 +8,7 @@ const gameSchema = mongoose.Schema({
   description: {type: String},
   creator: {type: String, required:true},
   imageURL: {type: String},
-  releaseDate: {type: String},
+  releaseDate: {type: Date},
 });
 
 // checks if table exists OR create new table
