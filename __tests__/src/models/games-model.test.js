@@ -1,12 +1,10 @@
-const mongoConnect = require('../../../util/mongoose-connect');
-const MONGODB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost/401d3-people';
+
+const supergoose = require('../../supergoose');
 const GameRepo = require('../../../src/models/games-model.js');
 const game = new GameRepo();
 describe('Data-modeling', () => {
-  beforeAll(() => {
-    return mongoConnect(MONGODB_URI);
-  });
+  beforeAll(supergoose.startDB);
+  afterAll(supergoose.stopDB);
   it('should add a new game', async () => {
     var result = await game.create({
       name: 'Pac Man',
@@ -23,7 +21,7 @@ describe('Data-modeling', () => {
       genre: 'Battle Royale',
       creator: 'Jacob',
     });
-   
+
     var getId = await game.getById(result.getId_id);
     expect(getId).toBeDefined();
     expect(result.name).toBe('Fort Nite');
