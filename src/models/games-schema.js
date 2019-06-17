@@ -9,6 +9,7 @@ const gameSchema = mongoose.Schema({
   creator: {type: String, required:true},
   imageURL: {type: String},
   releaseDate: {type: Date},
+  approved: {type: Boolean, default: false},
 });
 
 // checks if table exists OR create new table
