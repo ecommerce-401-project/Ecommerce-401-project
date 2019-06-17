@@ -8,6 +8,7 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(require('./routes/game-router'));
 
 module.exports = {
   server: app,
