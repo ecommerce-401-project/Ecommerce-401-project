@@ -1,6 +1,6 @@
 'use strict';
-
-module.exports = (req,res,next) => {
+//add next to paremiter
+module.exports = (req,res) => {
   let error = { error: 'Resource Not Found' };
   res.statusCode = 404;
   res.statusMessage = 'Not Found';

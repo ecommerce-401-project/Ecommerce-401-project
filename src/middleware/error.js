@@ -1,6 +1,6 @@
 'use strict';
-
-module.exports = (err, req, res, next) => {
+//add next to paremeter
+module.exports = (err, req, res) => {
   console.error('__SERVER_ERROR__', err);
   let error = { error: err.message || err };
   res.statusCode = err.status || 500;

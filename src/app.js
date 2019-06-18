@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(require('./routes/player-routes'));
 app.use(require('./routes/publisher-routes'));
 app.use(require('./routes/admin-routes'));
-
+app.use(require('./auth/routes/auth-router'));
 module.exports = {
   server: app,
   start: port =>
