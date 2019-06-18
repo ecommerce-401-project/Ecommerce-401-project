@@ -5,12 +5,14 @@ const User = require('../user-schema');
 
 const authRouter = express.Router();
 
-authRouter.post('/signup', (req, res, next) => {
+authRouter.post('/signup', (req, res) => {
   let user = new User(req.body);
   user.save()
-    .then(user=> {
+    .then(user => {
       res.status(200).json(user);
-    }).catch(next);
+    }).catch(err => {
+      console.error(err);
+    });
 
 });
 
