@@ -1,6 +1,6 @@
 'use strict';
 
-// schema creation
+// creates games for mongodb
 const mongoose = require('mongoose');
 const gameSchema = mongoose.Schema({ 
   name: {type: String, required:true},
@@ -13,7 +13,7 @@ const gameSchema = mongoose.Schema({
 });
 
 // checks if table exists OR create new table
-const Game = mongoose.models.game || mongoose.model('game', gameSchema);
+const Game = mongoose.models.game || mongoose.model('games', gameSchema);
 
 // export
 module.exports = Game;

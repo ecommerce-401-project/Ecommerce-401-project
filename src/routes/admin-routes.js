@@ -1,16 +1,15 @@
 'use strict';
+
 const express = require('express');
 const adminRouter = (module.exports = new express.Router());
-const gameModel = require('../models/games-model');
+const gameModel = require('../models/games-repo');
 const game = new gameModel();
 
-
-//can get all games on the platform, both published and unpublished
+// routes
 adminRouter.get('/games/admin', getAll);
-
-//can get Only unpublished games
 adminRouter.get('/games/admin/unpublished', getAllUnPublished);
 
+// route functions
 function getAll(req, res, next) {
   game
     .getAll()
@@ -23,7 +22,6 @@ function getAll(req, res, next) {
     })
     .catch(next);
 }
-
 function getAllUnPublished(req, res, next) {
   game
     .getAllUnPublished()
