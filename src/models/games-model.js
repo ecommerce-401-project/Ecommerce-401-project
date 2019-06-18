@@ -28,7 +28,7 @@ class GameRepository {
     return await gameToUpdate.save();
   }
   async delete(_id) {
-    return await Game.deleteOne({ _id });
+    return await Game.deleteOne({_id});
   }
 }
 

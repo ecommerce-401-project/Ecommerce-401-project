@@ -1,5 +1,8 @@
 const { server } = require('../../../src/app');
 const supergoose = require('../../supergoose');
+const gameRepo = require('../../../src/models/games-model');
+const game = new gameRepo();
+
 //tell supergoose to start the database before all tests
 beforeAll(supergoose.startDB);
 //tell supergoose to stop after all tests. 
@@ -27,8 +30,14 @@ describe('Publisher Routes', () => {
         genre: 'Retro',
         creator: 'Nintendo',
       });
-    console.log(result._id);
-    var deleteGame = await mockRequest.delete('/games/publisher/:result._id');
-    expect({deleteGame}).toBeDefined();
+
+    console.log('result id', result.body._id);
+     
+    
+    var deleteGame = await mockRequest.delete(`/games/publisher/${result.body._id}`);
+    expect(deleteGame.status).toBe(200);
+    var gametest = await mockRequest
+      .get(`/games/${result.body._id}`);
+    expect(gametest.data).toBeUndefined();
   });
 });
