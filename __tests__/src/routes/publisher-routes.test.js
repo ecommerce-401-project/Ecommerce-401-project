@@ -19,4 +19,16 @@ describe('Publisher Routes', () => {
         expect(res.body).toHaveProperty('name', 'Skylars Game');
       });
   });
+  it('deletes a game', async () => {
+    var result = await mockRequest
+      .post('/games/publisher')
+      .send({
+        name: 'Donkey Kong',
+        genre: 'Retro',
+        creator: 'Nintendo',
+      });
+    console.log(result._id);
+    var deleteGame = await mockRequest.delete('/games/publisher/:result._id');
+    expect({deleteGame}).toBeDefined();
+  });
 });
