@@ -1,7 +1,9 @@
 'use strict';
+
+//const mongoose = require('mongoose');
 const express = require('express');
 const User = require('../user-schema');
-const auth = require('../middleware');
+//const auth = require('../middleware');
 
 const authRouter = express.Router();
 
