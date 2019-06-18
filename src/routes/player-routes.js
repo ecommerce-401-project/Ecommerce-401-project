@@ -1,16 +1,15 @@
 'use strict';
+
 const express = require('express');
 const playerRouter = (module.exports = new express.Router());
-const gameModel = require('../models/games-model');
+const gameModel = require('../models/games-repo');
 const game = new gameModel();
 
-//player gets all published game - default route
+// routes
 playerRouter.get('/games', getAllPublishedGames);
-//player gets game by id || params
 playerRouter.get('/games/:id', GameById);
-//player can save to own library ?? 
-// playerRouter.post('/games/:id/myLibrary', saveGame);
 
+// route functions
 function getAllPublishedGames(req, res, next) {
   game
     .getAllPublished()
@@ -32,6 +31,3 @@ function GameById(req, res, next) {
     })
     .catch(next);
 }
-// function saveGame() {
-
-// }

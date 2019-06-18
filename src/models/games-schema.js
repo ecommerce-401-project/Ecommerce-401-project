@@ -1,6 +1,6 @@
 'use strict';
 
-// schema creation
+// creates games for mongodb
 const mongoose = require('mongoose');
 const gameSchema = mongoose.Schema({ 
   name: {type: String, required:true},
