@@ -4,7 +4,7 @@ const Game = require('./games-schema');
 
 class GameRepository {
   //only returns games that have been approved
-  getAll() {
+  getAllPublished() {
     return Promise.resolve(Game.find({ approved: true }));
   }
   //use find with the param id to return specific thing

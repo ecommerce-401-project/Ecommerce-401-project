@@ -41,9 +41,8 @@ describe('Data-modeling', () => {
       creator: 'Publisher',
     });
 
-    var result = await game.getAll();
+    var result = await game.getAllPublished();
     expect(result.length).toBe(1);
     expect(result[0].name).toBe('Approved Game');
-    
   });
 });

@@ -1,16 +1,16 @@
 'use strict';
 const express = require('express');
-const gameRouter = (module.exports = new express.Router());
+const playerRouter = (module.exports = new express.Router());
 const gameModel = require('../models/games-model');
 const game = new gameModel();
 
-gameRouter.get('/games', getAllGames);
-gameRouter.post('/games', createGames);
-gameRouter.get('/games/:id', GameById);
+//player gets all published game - default route
+playerRouter.get('/games', getAllPublishedGames);
+playerRouter.get('/games/:id', GameById);
 
-function getAllGames(req, res, next) {
+function getAllPublishedGames(req, res, next) {
   game
-    .getAll()
+    .getAllPublished()
     .then(data => {
       const output = {
         count: data.length,
@@ -29,10 +29,6 @@ function GameById(req, res, next) {
     })
     .catch(next);
 }
+// function saveGame() {
 
-function createGames(req, res, next) {
-  game
-    .create(req.body)
-    .then(result => res.status(200).json(result))
-    .catch(next);
-}
+// }
