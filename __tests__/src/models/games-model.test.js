@@ -1,4 +1,3 @@
-
 const supergoose = require('../../supergoose');
 const GameRepo = require('../../../src/models/games-model.js');
 const game = new GameRepo();
@@ -14,6 +13,7 @@ describe('Data-modeling', () => {
     expect(result).toBeDefined();
     expect(result.name).toBe('Pac Man');
     expect(result._id).toBeDefined();
+    expect(result._id).toBeDefined();
   });
   it('should get game by id', async () => {
     var result = await game.create({
@@ -22,8 +22,27 @@ describe('Data-modeling', () => {
       creator: 'Jacob',
     });
 
-    var getId = await game.getById(result.getId_id);
+    var getId = await game.getById(result._id);
     expect(getId).toBeDefined();
-    expect(result.name).toBe('Fort Nite');
+    expect(getId.name).toBe('Fort Nite');
+    expect(getId.published).toBe(false);
+  });
+
+  it('should only return published games', async () => {
+    await game.create({
+      name: 'published Game',
+      genre: 'published Games',
+      creator: 'Publisher',
+      published: true,
+    });
+    await game.create({
+      name: 'Not published Game',
+      genre: 'Not published Games',
+      creator: 'Publisher',
+    });
+
+    var result = await game.getAllPublished();
+    expect(result.length).toBe(1);
+    expect(result[0].name).toBe('published Game');
   });
 });
