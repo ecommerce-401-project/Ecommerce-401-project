@@ -8,6 +8,7 @@ const game = new gameModel();
 // routes
 playerRouter.get('/games', getAllPublishedGames);
 playerRouter.get('/games/:id', GameById);
+playerRouter.put('/games/:id', saveGame);
 
 // route functions
 function getAllPublishedGames(req, res, next) {
@@ -19,13 +20,21 @@ function getAllPublishedGames(req, res, next) {
         results: data,
       };
 
-      res.status(200).json(output);
+      res.status(200).json(output); 
     })
     .catch(next);
 }
 function GameById(req, res, next) {
   game
     .getById(req.params.id)
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(next);
+}
+function saveGame(req, res, next) {
+  game
+    .update(req.params.id)
     .then(result => {
       res.status(200).json(result);
     })

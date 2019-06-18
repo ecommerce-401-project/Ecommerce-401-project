@@ -25,9 +25,9 @@ class GameRepository {
     let newGame = new Game(game);
     return newGame.save();
   }
-  async update(_id, entry) {
+  async update(_id, game) {
     let gameToUpdate = await Game.findOne({ _id });
-    Object.assign(gameToUpdate, entry);
+    Object.assign(gameToUpdate, game);
     return await gameToUpdate.save();
   }
   delete(_id) {
