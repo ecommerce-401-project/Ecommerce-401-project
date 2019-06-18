@@ -1,5 +1,4 @@
 'use strict';
-const mongoose = require('mongoose');
 const express = require('express');
 const User = require('../user-schema');
 
