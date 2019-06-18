@@ -1,7 +1,5 @@
 const { server } = require('../../../src/app');
 const supergoose = require('../../supergoose');
-const gameRepo = require('../../../src/models/games-model');
-const game = new gameRepo();
 
 //tell supergoose to start the database before all tests
 beforeAll(supergoose.startDB);
@@ -18,7 +16,7 @@ describe('Publisher Routes', () => {
       .expect(200)
       .expect(res => {
         console.log(res.body);
-        expect(res.body).toHaveProperty('approved', false);
+        expect(res.body).toHaveProperty('published', false);
         expect(res.body).toHaveProperty('name', 'Skylars Game');
       });
   });

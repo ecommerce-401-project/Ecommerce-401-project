@@ -3,12 +3,12 @@
 const Game = require('./games-schema');
 
 class GameRepository {
-  //only returns games that have been approved
+  //only returns games that have been published
   getAllPublished() {
-    return Promise.resolve(Game.find({ approved: true }));
+    return Promise.resolve(Game.find({ published: true }));
   }
   getAllUnPublished() {
-    return Promise.resolve(Game.find({ approved: false }));
+    return Promise.resolve(Game.find({ published: false }));
   }
   getAll() {
     return Promise.resolve(Game.find());

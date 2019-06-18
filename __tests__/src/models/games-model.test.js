@@ -25,24 +25,24 @@ describe('Data-modeling', () => {
     var getId = await game.getById(result._id);
     expect(getId).toBeDefined();
     expect(getId.name).toBe('Fort Nite');
-    expect(getId.approved).toBe(false);
+    expect(getId.published).toBe(false);
   });
 
-  it('should only return approved games', async () => {
+  it('should only return published games', async () => {
     await game.create({
-      name: 'Approved Game',
-      genre: 'Approved Games',
+      name: 'published Game',
+      genre: 'published Games',
       creator: 'Publisher',
-      approved: true,
+      published: true,
     });
     await game.create({
-      name: 'Not Approved Game',
-      genre: 'Not Approved Games',
+      name: 'Not published Game',
+      genre: 'Not published Games',
       creator: 'Publisher',
     });
 
     var result = await game.getAllPublished();
     expect(result.length).toBe(1);
-    expect(result[0].name).toBe('Approved Game');
+    expect(result[0].name).toBe('published Game');
   });
 });
