@@ -3,10 +3,10 @@
 // creates users for mongodb
 const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({ 
-  username: {type: String, required:true},
+  username: {type: String, required:true, unique:true},
   password: {type: String, required:true},
   games: {type: Array},
-  email: {type: String},
+  email: {type: String, lowercase:true},
 });
 
 // checks if table exists OR create new table
