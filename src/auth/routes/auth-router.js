@@ -1,6 +1,6 @@
 'use strict';
-// eslint-disable-next-line no-unused-vars
-const mongoose = require('mongoose');
+
+//const mongoose = require('mongoose');
 const express = require('express');
 const User = require('../user-schema');
 //const auth = require('../middleware');
