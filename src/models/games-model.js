@@ -7,6 +7,12 @@ class GameRepository {
   getAllPublished() {
     return Promise.resolve(Game.find({ approved: true }));
   }
+  getAllUnPublished() {
+    return Promise.resolve(Game.find({ approved: false }));
+  }
+  getAll() {
+    return Promise.resolve(Game.find());
+  }
   //use find with the param id to return specific thing
   async getById(_id) {
     return await Game.findById(_id);

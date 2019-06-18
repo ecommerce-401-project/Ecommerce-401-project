@@ -10,10 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(require('./routes/player-routes'));
 app.use(require('./routes/publisher-routes'));
+app.use(require('./routes/admin-routes'));
 
 module.exports = {
   server: app,
   start: port =>
     app.listen(port, () => console.log(`Server up on port ${port}`)),
 };
-  
