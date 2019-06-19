@@ -56,7 +56,20 @@ describe('Data-modeling', () => {
     let result = await game.getById(approval._id);
     expect(result.name).toBe('Needs Approval');
     expect(result.published).toBe(true);
-
   });
 
+  it('can delete game', async () => {
+    const newGame = await game.create({
+      name: 'hi',
+      genre: 'Jean',
+      creator: 'me',
+    });
+    expect(newGame).toHaveProperty('_id');
+
+    const deleteResult = await game.delete(newGame._id);
+    expect(deleteResult).toHaveProperty('deletedCount', 1);
+
+    const deletedGame = await game.getById(newGame._id);
+    expect(deletedGame).toBe(null);
+  });
 });
