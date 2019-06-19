@@ -2,12 +2,12 @@
 
 const express = require('express');
 const adminRouter = (module.exports = new express.Router());
-const gameModel = require('../models/games-repo');
-const game = new gameModel();
+const game = require('../models/games-repo');
+
 
 // routes
-adminRouter.get('/games/admin', getAll);
-adminRouter.get('/games/admin/unpublished', getAllUnPublished);
+adminRouter.get('/admin', getAll);
+adminRouter.get('/admin/unpublished', getAllUnPublished);
 
 // route functions
 function getAll(req, res, next) {

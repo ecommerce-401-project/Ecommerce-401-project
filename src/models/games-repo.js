@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Game = require('./games-schema');
+const Game = require("./games-schema");
 
 // methods to be called in various routes
 // TODO: STILL NEED MORE METHODS:
@@ -9,30 +9,35 @@ const Game = require('./games-schema');
 // deleteowngame
 
 class GameRepository {
-  getAllPublished() {
+  static getAllPublished() {
     return Game.find({ published: true });
   }
-  getAllUnPublished() {
+  static getAllUnPublished() {
     return Game.find({ published: false });
   }
-  getAll() {
+  static getAll() {
     return Game.find();
   }
-  getById(_id) {
+  static getById(_id) {
     return Game.findById(_id);
   }
-  create(game) {
+  static create(game) {
     let newGame = new Game(game);
     return newGame.save();
   }
-  async update(_id, game) {
+  static async update(_id, game) {
     let gameToUpdate = await Game.findOne({ _id });
     Object.assign(gameToUpdate, game);
     return await gameToUpdate.save();
   }
-  delete(_id) {
-    return Game.deleteOne({_id});
+  static delete(_id) {
+    return Game.deleteOne({ _id });
   }
+  // saveGame(){
+  //   game.update(
+  //     { _id: game._id },
+  //     { $push: { games: {name: "Paperboy", creator: "nintendo", genre: "funny"} } },
+  // );
 }
 
 module.exports = GameRepository;

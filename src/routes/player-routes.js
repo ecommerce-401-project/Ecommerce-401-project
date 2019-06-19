@@ -2,13 +2,12 @@
 
 const express = require('express');
 const playerRouter = (module.exports = new express.Router());
-const gameModel = require('../models/games-repo');
-const game = new gameModel();
+const game = require('../models/games-repo');
 
 // routes
 playerRouter.get('/games', getAllPublishedGames);
 playerRouter.get('/games/:id', GameById);
-playerRouter.put('/games/:id', saveGame);
+// playerRouter.put('/games/:id', saveGame);
 
 // route functions
 function getAllPublishedGames(req, res, next) {
@@ -32,11 +31,11 @@ function GameById(req, res, next) {
     })
     .catch(next);
 }
-function saveGame(req, res, next) {
-  game
-    .update(req.params.id)
-    .then(result => {
-      res.status(200).json(result);
-    })
-    .catch(next);
-}
+// function saveGame(req, res, next) {
+//   game
+//     .update(req.params.id)
+//     .then(result => {
+//       res.status(200).json(result);
+//     })
+//     .catch(next);
+// }
