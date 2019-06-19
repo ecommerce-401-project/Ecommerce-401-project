@@ -6,9 +6,9 @@ const game = require('../models/games-repo');
 
 
 // routes
-adminRouter.get('admin', getAll);
-adminRouter.get('admin/unpublished', getAllUnPublished);
-adminRouter.get('admin/approve-game/:id', approveGame);
+adminRouter.get('/admin', getAll);
+adminRouter.get('/admin/unpublished', getAllUnPublished);
+adminRouter.get('/admin/approve-game/:id', approveGame);
 
 // route functions
 function getAll(req, res, next) {
