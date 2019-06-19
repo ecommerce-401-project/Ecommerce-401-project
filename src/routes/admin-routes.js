@@ -6,9 +6,9 @@ const gameModel = require('../models/games-repo');
 const game = new gameModel();
 
 // routes
-adminRouter.get('/games/admin', getAll);
-adminRouter.get('/games/admin/unpublished', getAllUnPublished);
-
+adminRouter.get('admin', getAll);
+adminRouter.get('admin/unpublished', getAllUnPublished);
+adminRouter.get('admin/approve-game/:id', approveGame);
 // route functions
 function getAll(req, res, next) {
   game
@@ -31,6 +31,16 @@ function getAllUnPublished(req, res, next) {
         results: data,
       };
       res.status(200).json(output);
+    })
+    .catch(next);
+}
+//  published: {type: Boolean, default: false},
+
+function approveGame(req, res, next) {
+  game
+    .approveGame(req.params.id)
+    .then(data => {
+      res.status(200).json(data);
     })
     .catch(next);
 }

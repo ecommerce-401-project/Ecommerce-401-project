@@ -13,6 +13,7 @@ class GameRepository {
     return Game.find({ published: true });
   }
   getAllUnPublished() {
+    console.log();
     return Game.find({ published: false });
   }
   getAll() {
@@ -33,6 +34,17 @@ class GameRepository {
   delete(_id) {
     return Game.deleteOne({_id});
   }
+
+  approveGame(id) {
+    return  Game.update({
+      _id: id,
+      published: false,
+    }, {
+      $set: {published: true },
+    });
+      
+  }
 }
+
 
 module.exports = GameRepository;
