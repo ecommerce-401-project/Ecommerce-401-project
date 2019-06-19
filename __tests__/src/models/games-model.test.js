@@ -1,6 +1,6 @@
 const supergoose = require('../../supergoose');
-const game = require('../../../src/models/games-repo.js');
 
+const game = require('../../../src/models/games-repo.js');
 describe('Data-modeling', () => {
   beforeAll(supergoose.startDB);
   afterAll(supergoose.stopDB);
@@ -45,4 +45,18 @@ describe('Data-modeling', () => {
     expect(result.length).toBe(1);
     expect(result[0].name).toBe('published Game');
   });
+
+  it('admin approved game to be listed', async () => {
+    const approval = await game.create({
+      name: 'Needs Approval',
+      genre: 'Test Games',
+      creator: 'Tester',
+    });
+    await game.approveGame(approval._id);
+    let result = await game.getById(approval._id);
+    expect(result.name).toBe('Needs Approval');
+    expect(result.published).toBe(true);
+
+  });
+
 });
