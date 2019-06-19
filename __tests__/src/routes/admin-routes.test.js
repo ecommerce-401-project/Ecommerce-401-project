@@ -28,5 +28,17 @@ describe('Admin Routes', () => {
     expect(response.status).toBe(200);
     // expect(admin.body)
   });
+
+  it('admin should be able to delete game', async() => {
+    let result = await game.create({
+      name: 'big Man',
+      genre: 'Family',
+      creator: 'Fizbuzzer',
+    });
+
+    let deleteGame= await mockRequest.delete(`/admin/delete-game/${result._id}`);
+    expect(deleteGame.body.data).toBeUndefined();
+    expect(deleteGame.status).toBe(200);
+  });
    
 });

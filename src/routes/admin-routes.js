@@ -9,6 +9,7 @@ const game = require('../models/games-repo');
 adminRouter.get('/admin', getAll);
 adminRouter.get('/admin/unpublished', getAllUnPublished);
 adminRouter.get('/admin/approve-game/:id', approveGame);
+adminRouter.delete('/admin/delete-game/:id', deleteGame);
 
 // route functions
 function getAll(req, res, next) {
@@ -40,6 +41,15 @@ function getAllUnPublished(req, res, next) {
 function approveGame(req, res, next) {
   game
     .approveGame(req.params.id)
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(next);
+}
+
+function deleteGame(req, res, next) {
+  game
+    .delete(req.params.id)
     .then(data => {
       res.status(200).json(data);
     })
