@@ -7,39 +7,71 @@ const User = require('../../../src/auth/user-schema');
 beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
 
+let user = new User({
+  username: 'michele',
+  password: '12345456',
+});
+let game = new Game({
+  name: 'Mario',
+  creator: 'Nintendo',
+  genre: 'Retro',
+});
+
+beforeAll(async () => {
+  await user.save();
+  expect(user._id).toBeDefined();
+  await game.save();
+  expect(game._id).toBeDefined();
+});
+
 describe('the user repo', () => {
   it('can save game to user', async () => {
     //arrange
-    let user = new User({
-      username: 'michele',
-      password: '12345456',
-    });
-    await user.save();
-    console.log(user._id);
-    expect(user._id).toBeDefined();
     expect(user.gameLibrary.toObject()).toEqual([]);
-    
-    let game = new Game({
-      name: 'Mario', 
-      creator: 'Nintendo',
-      genre: 'Retro',
-    });
 
+    //act
+    await UserRepo.saveGame(user, game._id);
 
-    await game.save();
-    expect(game._id).toBeDefined();
-    //act 
-    await UserRepo.saveGame(user, game);
     //assert
-    expect(user.gameLibrary.toObject()).not.toEqual([]);
+    expect(user.gameLibrary.toObject()).toEqual([game._id]);
+
+    // Make sure getting user includes new game
     let newuser = await UserRepo.getById(user._id);
-    console.log(newuser.gameLibrary.toObject());
+    expect(newuser.gameLibrary.toObject()).toEqual([game._id]);
+  });
+
+  it('does not add game to user for id that is invalid', async () => {
+    //act
+    await UserRepo.saveGame(user, 'deadbeefdeadbeefdead');
+
+    //assert
+    expect(user.gameLibrary.toObject()).toEqual([game._id]);
+
+    // Make sure getting user does not include missing game
+    let newuser = await UserRepo.getById(user._id);
+    expect(newuser.gameLibrary.toObject()).toEqual([game._id]);
+  });
+
+  it('does not add game to user for id that is not found', async () => {
+    //act
+    await UserRepo.saveGame(user, 'deadbeefdeadbeefdeadbeef');
+
+    //assert
+    expect(user.gameLibrary.toObject()).toEqual([game._id]);
+
+    // Make sure getting user does not include missing game
+    let newuser = await UserRepo.getById(user._id);
+    expect(newuser.gameLibrary.toObject()).toEqual([game._id]);
+  });
+  it('does not add game to user for id that is not found', async () => {
+    //act
+    await UserRepo.saveGame(user, null);
+
+    //assert
+    expect(user.gameLibrary.toObject()).toEqual([game._id]);
+
+    // Make sure getting user does not include missing game
+    let newuser = await UserRepo.getById(user._id);
     expect(newuser.gameLibrary.toObject()).toEqual([game._id]);
   });
 });
-
-
-
-
-
-

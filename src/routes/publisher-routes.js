@@ -5,8 +5,8 @@ const game = require('../models/games-repo');
 const publisherRouter = (module.exports = new express.Router());
 
 // routes
-publisherRouter.post('/games/publisher', createGame);
-publisherRouter.delete('/games/publisher/:id', deleteGame);
+publisherRouter.post('/publisher', createGame);
+publisherRouter.delete('/games/:id', deleteGame);
 //TO DO
 //Need a delete own games route
 //need get own games route
