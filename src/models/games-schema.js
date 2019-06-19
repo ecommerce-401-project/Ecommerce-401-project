@@ -2,7 +2,9 @@
 
 // creates games for mongodb
 const mongoose = require('mongoose');
-const gameSchema = mongoose.Schema({ 
+const Schema = mongoose.Schema;
+
+const gameSchema = Schema({ 
   name: {type: String, required:true},
   genre: {type: String, required:true},
   description: {type: String},

@@ -1,6 +1,6 @@
 const supergoose = require('../../supergoose');
-const GameRepo = require('../../../src/models/games-repo.js');
-const game = new GameRepo();
+const game = require('../../../src/models/games-repo.js');
+
 describe('Data-modeling', () => {
   beforeAll(supergoose.startDB);
   afterAll(supergoose.stopDB);
