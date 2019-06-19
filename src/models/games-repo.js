@@ -33,11 +33,24 @@ class GameRepository {
   static delete(_id) {
     return Game.deleteOne({ _id });
   }
+
+  approveGame(id) {
+    return  Game.update({
+      _id: id,
+      published: false,
+    }, {
+      $set: {published: true },
+    });
+      
+  }
+
   // saveGame(){
   //   game.update(
   //     { _id: game._id },
   //     { $push: { games: {name: "Paperboy", creator: "nintendo", genre: "funny"} } },
   // );
+
 }
+
 
 module.exports = GameRepository;

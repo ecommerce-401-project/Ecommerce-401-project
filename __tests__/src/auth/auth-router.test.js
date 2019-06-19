@@ -12,8 +12,9 @@ describe('auth router test', () => {
       .post('/signup')
       .send({ username: 'hello World', password: '12345' });
     expect(result.body.username).toBe('hello World');
-
+    expect(result.body.id).toBeDefined();
   });
+  
 });
 
 
