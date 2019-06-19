@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const Game = require("./games-schema");
+const Game = require('./games-schema');
 
 // methods to be called in various routes
 // TODO: STILL NEED MORE METHODS:

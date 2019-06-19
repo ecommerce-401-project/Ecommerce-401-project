@@ -3,7 +3,7 @@
 //const mongoose = require('mongoose');
 const express = require('express');
 const User = require('../user-schema');
-//const auth = require('../middleware');
+const auth = require('../middleware');
 
 const authRouter = express.Router();
 
@@ -19,6 +19,12 @@ authRouter.post('/signup', (req, res, next) => {
       res.status(200).json(user);
     })
     .catch(next);
+});
+authRouter.post('/signin', auth, (req, res) => {
+  res.cookie('auth', req.token);
+  console.log(res.cookie);
+  res.send(req.token);
+  console.log(req.token);
 });
 
 module.exports = authRouter;
