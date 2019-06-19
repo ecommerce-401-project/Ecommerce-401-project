@@ -23,16 +23,7 @@ const userSchema = new Schema({
 { toObject: { virtuals: true }, toJSON: { virtuals: true } }
 );
 
-userSchema.virtual('acl', {
-  ref: 'roles',
-  localField: 'role',
-  foreignField: 'role',
-  justOne: true,
-});
 
-userSchema.pre('findOne', function() {
-  this.populate('acl');
-});
 
 userSchema.pre('save', function(next) {
   bcrypt
@@ -74,15 +65,12 @@ userSchema.methods.comparePassword = function(password) {
 userSchema.methods.generateToken = function() {
   let tokenData = {
     id: this._id,
-    capabilities: (this.acl && this.acl.capabilities) || [],
   };
   return jwt.sign(tokenData, process.env.SECRET || 'changeit');
 };
 
-userSchema.methods.can = function(capability) {
-  if (!this.acl || !this.acl.capabilities) return false;
-
-  return this.acl.capabilities.includes(capability);
+userSchema.methods.is = function(role) {
+  return !role || this.role === role;
 };
 
 module.exports = mongoose.model('users', userSchema);
