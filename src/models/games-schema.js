@@ -3,6 +3,7 @@
 // creates games for mongodb
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const gameSchema = Schema({ 
   name: {type: String, required:true},
@@ -12,6 +13,7 @@ const gameSchema = Schema({
   imageURL: {type: String},
   releaseDate: {type: Date},
   published: {type: Boolean, default: false},
+  publisher: { type: ObjectId, ref: 'users' },
 });
 
 // checks if table exists OR create new table

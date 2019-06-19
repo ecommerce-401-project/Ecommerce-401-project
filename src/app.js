@@ -12,6 +12,14 @@ app.use(require('./routes/player-routes'));
 app.use(require('./routes/publisher-routes'));
 app.use(require('./routes/admin-routes'));
 app.use(require('./auth/routes/auth-router'));
+
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.statusCode = 500;
+  res.send(err);
+});
+
 module.exports = {
   server: app,
   start: port =>
