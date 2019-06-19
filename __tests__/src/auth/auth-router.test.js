@@ -2,7 +2,6 @@
 const supergoose = require('../../supergoose');
 const { server } = require('../../../src/app');
 const mockrequest = supergoose.server(server);
-// const User =  require('');
 beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
 
