@@ -11,12 +11,12 @@ const mockRequest = supergoose.server(server);
 describe('Admin Routes', () => {
   
   it('it gives back all items', async() => {
-    var unpublished = await game.create({
+    await game.create({
       name: 'Pac Man',
       genre: 'Retro',
       creator: 'Skylar',
     });
-    var published = await game.create({
+    await game.create({
       name: 'Pac Man',
       genre: 'Retro',
       creator: 'Skylar',
@@ -27,9 +27,6 @@ describe('Admin Routes', () => {
     expect(response.body.count).toBe(2);
     expect(response.status).toBe(200);
     // expect(admin.body)
-  
-
-   });
-   
-    // return mockRequest.get('/admin').expect(404);
   });
+   
+});
