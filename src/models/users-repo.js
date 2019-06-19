@@ -19,6 +19,9 @@ class UserRepo {
   static getById(id) {
     return User.findById(id);
   }
+  static getGameLibrary(id) {
+    return User.find(id.gameLibrary);
+  }
 }
 
 module.exports = UserRepo;
