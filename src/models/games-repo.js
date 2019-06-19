@@ -30,6 +30,7 @@ class GameRepository {
     Object.assign(gameToUpdate, game);
     return await gameToUpdate.save();
   }
+  
   static delete(_id) {
     return Game.deleteOne({ _id });
   }

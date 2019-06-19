@@ -15,7 +15,6 @@ describe('Publisher Routes', () => {
       .send({name: 'Skylars Game', genre: 'funny', creator: 'something'})
       .expect(200)
       .expect(res => {
-        console.log(res.body);
         expect(res.body).toHaveProperty('published', false);
         expect(res.body).toHaveProperty('name', 'Skylars Game');
       });
