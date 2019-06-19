@@ -2,7 +2,7 @@
 
 const User = require('./user-schema');
 
-module.exports = capability => (req, res, next) => {
+module.exports = role => (req, res, next) => {
   if (!req.headers.authorization) return _authError();
 
   let [authType, authString] = req.headers.authorization.split(' ');
@@ -18,7 +18,7 @@ module.exports = capability => (req, res, next) => {
 
   async function _authenticate(user) {
     if (!user) return _authError();
-    if (!user.can(capability)) return _authError();
+    if (!user.is(role)) return _authError();
 
     req.user = user;
     req.token = user.generateToken();
