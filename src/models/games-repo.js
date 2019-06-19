@@ -34,14 +34,14 @@ class GameRepository {
     return Game.deleteOne({ _id });
   }
 
-  approveGame(id) {
-    return  Game.update({
+  static approveGame(id) {
+    return Game.update({
       _id: id,
       published: false,
     }, {
-      $set: {published: true },
+      $set: { published: true },
     });
-      
+
   }
 
   // saveGame(){
