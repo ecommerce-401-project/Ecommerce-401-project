@@ -1,14 +1,13 @@
 'use strict';
 
 const express = require('express');
-const gameModel = require('../models/games-repo');
-const game = new gameModel();
+const game = require('../models/games-repo');
 const publisherRouter = (module.exports = new express.Router());
 
 // routes
 publisherRouter.post('/games/publisher', createGame);
 publisherRouter.delete('/games/publisher/:id', deleteGame);
-//TO DO 
+//TO DO
 //Need a delete own games route
 //need get own games route
 //need get own unpublished games route
@@ -21,6 +20,7 @@ function createGame(req, res, next) {
     .then(result => res.status(200).json(result))
     .catch(next);
 }
+
 function deleteGame(request, response, next) {
   game
     .delete(request.params.id)

@@ -5,11 +5,13 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('./role-schema');
+require('../models/games-schema');
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({ 
+const userSchema = new Schema({ 
   username: {type: String, required:true, unique:true},
   password: {type: String, required:true},
-  games: {type: Array},
+  gameLibrary: [{ type: Schema.ObjectId, ref: 'games' }],
   email: {type: String, lowercase:true},
   role: {
     type: String,
