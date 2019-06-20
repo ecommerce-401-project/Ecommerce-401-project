@@ -29,6 +29,8 @@
     "mongoose-schema-jsonschema": "^1.2.1",
     "morgan": "^1.9.1",
     "supertest": "^3.3.0",
+    "swagger-jsdoc": "^3.2.9",
+    "swagger-ui-express": "^4.0.6",
     "uuid": "^3.3.2"
   }
 }
