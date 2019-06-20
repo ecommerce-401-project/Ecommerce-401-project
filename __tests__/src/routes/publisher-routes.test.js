@@ -9,6 +9,69 @@ afterAll(supergoose.stopDB);
 //define a mock request to make api calls
 const mockRequest = supergoose.server(server);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var publisher;
 var publisher2;
 describe('Publisher Routes', () => {
