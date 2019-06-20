@@ -24,7 +24,7 @@ describe('Player Routes', () => {
   });
   it.skip('returns a 404 a bad id', async () => {
     return await mockRequest
-      .post('/games/5d0a81ca469009235bd7fabc/save')
+      .post('/games/5d0a81ca46jjhjhj9009235bd7fabc/save')
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .expect(404);
   });

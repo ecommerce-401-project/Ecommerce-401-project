@@ -11,6 +11,7 @@ playerRouter.get('/games', getAllPublishedGames);
 playerRouter.get('/games/:id', GameById);
 playerRouter.post('/games/:id/save', auth('player'), saveGame);
 playerRouter.get('/library', auth('player'), getLibrary);
+// playerRouter.delete('/library', auth('player'), deleteFromLibary);
 
 // route functions
 function getAllPublishedGames(req, res, next) {
@@ -49,8 +50,16 @@ function saveGame(req, res, next) {
 function getLibrary(req, res, next) {
   UserRepo.getGameLibrary(req.user._id)
     .then(data => {
-      // res.status(204);
       res.send(data);
     })
     .catch(next);
 }
+
+// function deleteFromLibary(req, res, next) {
+//   game
+//     .delete(req.params.id, game.id)
+//     .then(data => {
+//       res.status(200).json(data);
+//     })
+//     .catch(next);
+// }
