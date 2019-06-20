@@ -49,8 +49,8 @@ describe('Publisher Routes', () => {
     expect(gametest.data).toBeUndefined();
   });
 
-  it('Saves a game with the publishers id', () => {
-    mockRequest
+  it('Saves a game with the publishers id', async () => {
+    return await mockRequest
       .post ('/games/publisher')
       .set('Authorization', `Bearer ${publisher.generateToken()}`)
       .send ({
