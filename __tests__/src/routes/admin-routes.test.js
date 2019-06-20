@@ -9,8 +9,8 @@ afterAll(supergoose.stopDB);
 const mockRequest = supergoose.server(server);
 
 describe('Admin Routes', () => {
-  
-  it('it gives back all items', async() => {
+
+  it('it gives back all items', async () => {
     await game.create({
       name: 'Pac Man',
       genre: 'Retro',
@@ -22,23 +22,30 @@ describe('Admin Routes', () => {
       creator: 'Skylar',
       published: true,
     });
-    
+
     let response = await mockRequest.get('/admin');
     expect(response.body.count).toBe(2);
     expect(response.status).toBe(200);
     // expect(admin.body)
   });
 
-  it('admin should be able to delete game', async() => {
+  it('admin should be able to delete game', async () => {
     let result = await game.create({
       name: 'big Man',
       genre: 'Family',
       creator: 'Fizbuzzer',
     });
 
-    let deleteGame= await mockRequest.delete(`/admin/delete-game/${result._id}`);
+    let deleteGame = await mockRequest.delete(`/admin/delete-game/${result._id}`);
     expect(deleteGame.body.data).toBeUndefined();
     expect(deleteGame.status).toBe(200);
   });
-   
+  it('admin should be able to log game', async () => {
+    await game.create({
+      name: 'big Man',
+      genre: 'Family',
+      creator: 'Fizbuzzer',
+    });
+
+  });
 });
