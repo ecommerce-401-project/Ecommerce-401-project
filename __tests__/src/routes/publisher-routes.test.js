@@ -15,7 +15,9 @@ beforeAll(async() => {
   }).save();
 });
 //tell supergoose to stop after all tests. 
-afterAll(supergoose.stopDB);
+afterAll(() => {
+  supergoose.stopDB;
+});
 //define a mock request to make api calls 
 const mockRequest = supergoose.server(server);
 
@@ -50,18 +52,15 @@ describe('Publisher Routes', () => {
   });
 
   it('Saves a game with the publishers id', async () => {
-    return await mockRequest
+    let response = await mockRequest
       .post ('/games/publisher')
       .set('Authorization', `Bearer ${publisher.generateToken()}`)
       .send ({
         name: 'Borderlands 2',
         genre: 'looter-shooter',
         creator: 'Gearbox',
-      })
-      .expect(200)
-      .expect(res => {
-        expect(res.body).toHaveProperty('publisher', publisher._id);
       });
+    expect(response.status).toBe(200);
+    expect(toString(response.body.publisher)).toBe(toString(publisher._id));
   });
-
 });
