@@ -3,13 +3,13 @@
 const express = require('express');
 // const game = require('../models/games-repo');
 const publisherRouter = (module.exports = new express.Router());
-const auth = require('../../src/auth/middleware');
+const auth = require('../auth/middleware');
 const publisher = require('../models/publisher-repo');
-// const UserRepo = require('../../src/models/users-repo');
 
 // routes
-publisherRouter.post('/publisher', auth('publisher'), createGame);
+publisherRouter.post('/games', auth('publisher'), createGame);
 publisherRouter.delete('/games/:id', auth('publisher'), deleteGame);
+
 publisherRouter.get(
   'publisher/games/:id',
   auth('publisher'),
@@ -23,7 +23,12 @@ publisherRouter.get(
 
 // route functions
 function createGame(req, res, next) {
-  publisher.create(req.body)
+  publisher
+    .create({
+      ...req.body,
+      published: false,
+      publisher: req.user._id,
+    })
     .then(result => res.status(200).json(result))
     .catch(next);
 }
