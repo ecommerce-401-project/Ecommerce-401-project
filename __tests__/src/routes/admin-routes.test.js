@@ -57,4 +57,12 @@ describe('Admin Routes', () => {
       .expect(200);
     expect(deleteGame.body.data).toBeUndefined();
   });
+  it('admin should be able to log game', async () => {
+    await publisher.create({
+      name: 'big Man',
+      genre: 'Family',
+      creator: 'Fizbuzzer',
+    });
+
+  });
 });

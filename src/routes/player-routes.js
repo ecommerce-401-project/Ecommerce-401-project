@@ -10,6 +10,8 @@ const auth = require('../../src/auth/middleware');
 playerRouter.get('/games', getAllPublishedGames);
 playerRouter.get('/games/:id', GameById);
 playerRouter.post('/games/:id/save', auth('player'), saveGame);
+// playerRouter.post('/games/:id/signin', auth('player'), signIn);
+
 playerRouter.get('/library', auth('player'), getLibrary);
 // playerRouter.delete('/library', auth('player'), deleteFromLibary);
 
