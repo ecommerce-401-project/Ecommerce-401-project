@@ -24,7 +24,7 @@ const mockRequest = supergoose.server(server);
 describe('Publisher Routes', () => {
   it('returns a 200 for a post request', () => {
     return mockRequest
-      .post('/games/publisher')
+      .post('/games')
       .set('Authorization', `Bearer ${publisher.generateToken()}`)
       .send({name: 'Skylars Game', genre: 'funny', creator: 'something', published: true })
       .expect(200)
@@ -33,9 +33,10 @@ describe('Publisher Routes', () => {
         expect(res.body).toHaveProperty('name', 'Skylars Game');
       });
   });
+
   it('deletes a game', async () => {
     var result = await mockRequest
-      .post('/games/publisher')
+      .post('/games')
       .set('Authorization', `Bearer ${publisher.generateToken()}`)
       .send({
         name: 'Donkey Kong',
@@ -43,24 +44,25 @@ describe('Publisher Routes', () => {
         creator: 'Nintendo',
       });     
     
-    var deleteGame = await mockRequest.delete(`/games/publisher/${result.body._id}`)
-      .set('Authorization', `Bearer ${publisher.generateToken()}`);
-    expect(deleteGame.status).toBe(200);
-    var gametest = await mockRequest
-      .get(`/games/${result.body._id}`);
-    expect(gametest.data).toBeUndefined();
+    expect(result.body).toHaveProperty('_id');
+    await mockRequest
+      .delete(`/games/${result.body._id}`)
+      .set('Authorization', `Bearer ${publisher.generateToken()}`)
+      .expect(200);
+
+    await mockRequest.get(`/games/${result.body._id}`).expect(404);
   });
 
   it('Saves a game with the publishers id', async () => {
     let response = await mockRequest
-      .post ('/games/publisher')
+      .post ('/games')
       .set('Authorization', `Bearer ${publisher.generateToken()}`)
       .send ({
         name: 'Borderlands 2',
         genre: 'looter-shooter',
         creator: 'Gearbox',
-      });
-    expect(response.status).toBe(200);
-    expect(toString(response.body.publisher)).toBe(toString(publisher._id));
+      })
+      .expect(200);
+    expect(response.body.publisher.toString()).toBe(publisher._id.toString());
   });
 });

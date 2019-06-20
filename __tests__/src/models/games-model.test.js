@@ -1,11 +1,14 @@
 const supergoose = require('../../supergoose');
 
+const publisher = require('../../../src/models/publisher-repo.js');
 const game = require('../../../src/models/games-repo.js');
+const admin = require('../../../src/models/admin-repo.js');
+
 describe('Data-modeling', () => {
   beforeAll(supergoose.startDB);
   afterAll(supergoose.stopDB);
   it('should add a new game', async () => {
-    var result = await game.create({
+    var result = await publisher.create({
       name: 'Pac Man',
       genre: 'Retro',
       creator: 'Skylar',
@@ -16,7 +19,7 @@ describe('Data-modeling', () => {
     expect(result._id).toBeDefined();
   });
   it('should get game by id', async () => {
-    var result = await game.create({
+    var result = await publisher.create({
       name: 'Fort Nite',
       genre: 'Battle Royale',
       creator: 'Jacob',
@@ -29,13 +32,13 @@ describe('Data-modeling', () => {
   });
 
   it('should only return published games', async () => {
-    await game.create({
+    await publisher.create({
       name: 'published Game',
       genre: 'published Games',
       creator: 'Publisher',
       published: true,
     });
-    await game.create({
+    await publisher.create({
       name: 'Not published Game',
       genre: 'Not published Games',
       creator: 'Publisher',
@@ -47,16 +50,29 @@ describe('Data-modeling', () => {
   });
 
   it('admin approved game to be listed', async () => {
-    const approval = await game.create({
+    const approval = await publisher.create({
       name: 'Needs Approval',
       genre: 'Test Games',
       creator: 'Tester',
     });
-    await game.approveGame(approval._id);
+    await admin.approveGame(approval._id);
     let result = await game.getById(approval._id);
     expect(result.name).toBe('Needs Approval');
     expect(result.published).toBe(true);
-
   });
 
+  it('can delete game', async () => {
+    const newGame = await publisher.create({
+      name: 'hi',
+      genre: 'Jean',
+      creator: 'me',
+    });
+    expect(newGame).toHaveProperty('_id');
+
+    const deleteResult = await admin.delete(newGame._id);
+    expect(deleteResult).toHaveProperty('deletedCount', 1);
+
+    const deletedGame = await game.getById(newGame._id);
+    expect(deletedGame).toBe(null);
+  });
 });
