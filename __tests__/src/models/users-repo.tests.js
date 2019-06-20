@@ -115,27 +115,25 @@ describe('the user repo', () => {
 
     // Make sure getting user does not include missing game
     let newuser = await UserRepo.getById(user._id);
-    console.log('new user', newuser);
+    // console.log('new user', newuser);
 
     let userAfterDelete = await UserRepo.deleteFromLib(newuser, game._id);
 
-    console.log('newuser second time', userAfterDelete);
+    // console.log('newuser second time', userAfterDelete);
     expect(userAfterDelete.gameLibrary.toObject()).toEqual([game2._id]);
   });
   it.skip('it can accept a non-existent id', async () => {
     //act
     await UserRepo.saveGame(user, game._id);
+    await UserRepo.saveGame(user, game2._id);
 
     //assert
-    expect(user.gameLibrary.toObject()).toEqual([game._id]);
+    expect(user.gameLibrary.toObject()).toEqual([game._id, game2._id]);
 
     // Make sure getting user does not include missing game
     let newuser = await UserRepo.getById(user._id);
-    console.log('new user', newuser);
 
-    let userAfterDelete = await UserRepo.deleteFromLib(newuser, game2._id);
-
-    console.log('newuser second time', userAfterDelete);
-    expect(userAfterDelete.gameLibrary.toObject()).toEqual([game._id]);
+    let userAfterDelete = await UserRepo.deleteFromLib(newuser, '121212121212121212121212');
+    expect(userAfterDelete.gameLibrary.toObject()).toEqual([game._id, game2._id]);
   });
 });
