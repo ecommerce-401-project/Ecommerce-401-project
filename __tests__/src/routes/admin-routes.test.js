@@ -57,12 +57,22 @@ describe('Admin Routes', () => {
       .expect(200);
     expect(deleteGame.body.data).toBeUndefined();
   });
-  it('admin should be able to log game', async () => {
-    await publisher.create({
-      name: 'big Man',
+
+  it('admin should be able to approve game', async () => {
+    let unpublish = await publisher.create({
+      name: 'Jim Rohn',
       genre: 'Family',
       creator: 'Fizbuzzer',
     });
 
+    await mockRequest
+      .post(`/admin/approve-game/${unpublish._id}`)
+      .set('Authorization', `Bearer ${adminUser.generateToken()}`)
+      .expect(200);
+
+    let result = await mockRequest
+      .get(`/games/${unpublish._id}`)
+      .expect(200);
+    expect(result.body.published).toBe(true);
   });
 });
