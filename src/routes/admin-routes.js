@@ -9,7 +9,7 @@ const auth = require('../../src/auth/middleware');
 // routes
 adminRouter.get('/admin', auth('admin'), getAll);
 adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
-adminRouter.put('/admin/approve-game/:id', auth('admin'), approveGame);
+adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
 adminRouter.delete('/admin/delete-game/:id', auth('admin'),  deleteGame);
 
 // route functions

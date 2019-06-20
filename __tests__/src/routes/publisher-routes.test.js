@@ -118,7 +118,7 @@ describe('Publisher Routes', () => {
     expect(approvedGame).toHaveProperty('_id');
 
     await mockRequest
-      .put(`/admin/approve-game/${approvedGame._id}`)
+      .post(`/admin/approve-game/${approvedGame._id}`)
       .set('Authorization', `Bearer ${admin.generateToken()}`)
       .expect(200);
 
