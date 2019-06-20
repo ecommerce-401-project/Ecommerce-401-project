@@ -1,6 +1,5 @@
 'use strict';
 
-const User = require('../auth/user-schema');
 const Game = require('./games-schema');
 
 
@@ -13,13 +12,19 @@ class PublisherRepo {
     return newGame.save();
   }
   //publisher can delete own game
-  static delete(_id) {
-    return Game.deleteOne({ _id });
+  static delete(id) {
+    return Game.deleteOne({ _id: id });
   }
   //publisher can get own library
   //need to connect game with creator
-  static getGameLibrary(id) {
-    return User.find(id.creator);
+  static getUnpublishedGameLibrary(id) {
+    let unpublishedGames = Game.find( {publisher : id, published: false} );
+    return unpublishedGames;
+  }
+
+  static getPublishedGameLibrary(id) {
+    let publishedGames = Game.find( {publisher : id, published: true} );
+    return publishedGames;
   }
 }
 
