@@ -9,7 +9,7 @@ const auth = require('../../src/auth/middleware');
 // routes
 adminRouter.get('/admin', auth('admin'), getAll);
 adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
-adminRouter.get('/admin/approve-game/:id', auth('admin'), approveGame);
+adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
 adminRouter.delete('/admin/delete-game/:id', auth('admin'),  deleteGame);
 
 // route functions
@@ -37,7 +37,6 @@ function getAllUnPublished(req, res, next) {
     })
     .catch(next);
 }
-//  published: {type: Boolean, default: false},
 
 function approveGame(req, res, next) {
   admin
