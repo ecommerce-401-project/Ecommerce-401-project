@@ -39,6 +39,7 @@ function getAllUnPublished(req, res, next) {
 }
 
 function approveGame(req, res, next) {
+  console.log('approveGame', req.path);
   admin
     .approveGame(req.params.id)
     .then(data => {
