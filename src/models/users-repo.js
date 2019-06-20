@@ -10,14 +10,12 @@ class UserRepo {
     }
     let game = await Game.findById(gameId);
     if (!game) {
-      console.log(gameId + ' not found!');
       return;
     }
     if (user.gameLibrary.includes(gameId)) {
       return;
     } else {
       user.gameLibrary.push(gameId);
-      console.log(user.gameLibrary);
       return user.save();
     }
   }
