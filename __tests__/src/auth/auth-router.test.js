@@ -15,6 +15,7 @@ describe('auth router test', () => {
         username: 'hello World',
       });
   });
+  
   it('can\'t sign in without being authenticate', async () => {
     const token = 123456789;
     await mockrequest
@@ -22,6 +23,7 @@ describe('auth router test', () => {
       .set('Authorization', `basic ${token}`)
       .expect(401);
   });
+
   it('can sign in with valid username and password', async () => {
     await mockrequest
       .post('/signin')
