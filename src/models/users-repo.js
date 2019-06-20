@@ -27,6 +27,15 @@ class UserRepo {
   static getGameLibrary(id) {
     return User.find(id.gameLibrary);
   }
+  static async deleteFromLib(user, gameId) {
+    return User.findOneAndUpdate(
+      { _id: user._id },
+      {
+        $pull: { gameLibrary: gameId },
+      },
+      { new: true, safe: true, useFindAndModify: true }
+    );
+  }
 }
 
 module.exports = UserRepo;

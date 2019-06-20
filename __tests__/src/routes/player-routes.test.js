@@ -22,9 +22,9 @@ describe('Player Routes', () => {
   it('returns a 404 for an undefined route', () => {
     return mockRequest.get('/unknownroute').expect(404);
   });
-  it.skip('returns a 404 a bad id', async () => {
+  it('returns a 404 a bad id', async () => {
     return await mockRequest
-      .post('/games/5d0a81ca46jjhjhj9009235bd7fabc/save')
+      .post('/games/56jjhbd7fabc/save')
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .expect(404);
   });
