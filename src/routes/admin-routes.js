@@ -46,6 +46,12 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
  *     description: Returns list of games
  *     produces:
  *      - application/json
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *           description: id to be deleted
  *     responses:
  *       200:
  *         description: Returns a list of published games
@@ -53,19 +59,22 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
  *           type: array
  *           items: 
  *             $ref: '#/definitions/Game'
+ *         
  */
 adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
 /** 
  * @swagger
  * /admin/delete-game:
  *   post:
- * parameters:
- *- in: path
- * name: id   # Note the name is the same as in the path
- * required: true
  *     description: Returns list of games
  *     produces:
  *      - application/json
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *           description: id to be deleted
  *     responses:
  *       200:
  *         description: Returns a list of published games
@@ -73,6 +82,7 @@ adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
  *           type: array
  *           items: 
  *             $ref: '#/definitions/Game'
+ *         
  */
 adminRouter.delete('/admin/delete-game/:id', auth('admin'), deleteGame);
 
