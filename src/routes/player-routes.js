@@ -124,6 +124,9 @@ playerRouter.get('/library', auth('player'), getLibrary);
  *
  * /games/:id/save: 
  *    delete:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     tags:
  *      - Player 
  *     description: Saves game to users library
