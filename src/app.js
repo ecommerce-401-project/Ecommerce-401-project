@@ -17,6 +17,22 @@ const options = {
       title: 'Ecommerce 401 Project', // Title (required)
       version: '1.0.0', // Version (required)
     },
+    security: {
+      BasicAuth: [],
+      BearerAuth: [],
+    },
+    components: {
+      securitySchemes: {
+        BasicAuth: {
+          type: 'http',
+          scheme: 'basic',
+        },
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+        },
+      },
+    },
   },
   // Path to the API docs
   apis: [`${__dirname}/**/routes/*.js`],

@@ -25,6 +25,7 @@ const authRouter = express.Router();
  * 
  * /signup:
  *   post:
+ *     security: []
  *     description: Creates new user
  *     requestBody:
  *       description: Allows a user to be created given a username and password
@@ -62,6 +63,9 @@ authRouter.post('/signup', (req, res, next) => {
  *
  * /signin:
  *   post:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Signs in user
  *     requestBody:
  *       description: Allows user to sign in with a username and password

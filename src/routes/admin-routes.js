@@ -11,6 +11,9 @@ const auth = require('../../src/auth/middleware');
  * @swagger
  * /admin:
  *   get:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Returns list of games
  *     produces:
  *      - application/json
@@ -27,6 +30,9 @@ adminRouter.get('/admin', auth('admin'), getAll);
  * @swagger
  * /admin/unpublished:
  *   get:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Returns list of games
  *     produces:
  *      - application/json
@@ -43,6 +49,9 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
  * @swagger
  * /admin/approve-game:
  *   post:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Returns list of games
  *     produces:
  *      - application/json
@@ -66,6 +75,9 @@ adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
  * @swagger
  * /admin/delete-game:
  *   post:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Returns list of games
  *     produces:
  *      - application/json

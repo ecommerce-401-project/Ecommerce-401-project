@@ -10,28 +10,41 @@ const gameRepo = require('../models/games-repo');
 
 /**
  * @swagger
+ *  definitions:
+ *   NewGame:
+ *     type: object
+ *     required:
+ *       - name
+ *       - genre
+ *       - creator
+ *     properties:
+ *       name:
+ *         type: string
+ *         description: Title of game
+ *       genre:
+ *         type: string
+ *         description: Type of game
+ *       creator:
+ *         type: string
+ *         description: Who made the game
  * /games:
  *   post:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Creates a new game
  *     produces:
  *      - application/json
- *     parameters:
- *     - name: name
- *       in: query
- *       description: Name of the game
+ *     requestBody:
+ *       description: Allows a publisher to create a game
  *       required: true
- *       schema:
- *         type: string
- *     - name: genre
- *       in: query
- *       description: Genre of the game
- *       required: true
- *       schema:
- *         type: string
- *     - name: creator
- *       in: query
- *       description: Who created the game
- *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/NewGame' 
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             $ref: '#/definitions/NewGame' 
  *       schema:
  *         type: string
  *     responses:
@@ -40,24 +53,27 @@ const gameRepo = require('../models/games-repo');
  *         schema: 
  *           type: array
  *           items: 
- *             $ref: '#/definitions/Game'
+ *             $ref: '#/definitions/NewGame'
  */
 
 publisherRouter.post('/games', auth('publisher'), createGame);
 
 /**
  * @swagger
- * /games/:id:
+ * /games/{id}:
  *   delete:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Publisher can delete games they created
  *     produces:
  *      - application/json
  *     parameters:
  *     - name: id
- *       type: string
  *       required: true
  *       schema:
- *        in: path
+ *         type: string
+ *       in: path
  *     responses:
  *       204:
  *         description: Deletes a publishers game
@@ -69,6 +85,9 @@ publisherRouter.delete('/games/:id', auth('publisher'), deleteGame);
  * @swagger
  * /publisher/games/unpublished:
  *   get:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Gets all unpublished  games created by current publisher
  *     produces:
  *      - application/json
@@ -87,6 +106,9 @@ publisherRouter.get('/publisher/games/unpublished', auth('publisher'),getUnpubli
  * @swagger
  * /publisher/games/published:
  *   get:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Gets all published  games created by current publisher
  *     produces:
  *      - application/json

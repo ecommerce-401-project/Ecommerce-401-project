@@ -33,6 +33,7 @@ const auth = require('../../src/auth/middleware');
  *         description: Is the game published 
  * /games:
  *   get:
+ *     security: []
  *     description: Returns list of games
  *     produces:
  *      - application/json
@@ -51,6 +52,7 @@ playerRouter.get('/games', getAllPublishedGames);
  *
  * /games/:id:
  *   get:
+ *     security: []
  *     description: Returns a game by id
  *     produces:
  *       - application/json
@@ -74,6 +76,9 @@ playerRouter.get('/games/:id', GameById);
  *
  * /games/:id/save:
  *   post:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     description: Saves game to users library 
  *     parameters:
  *       - name: id
@@ -93,7 +98,10 @@ playerRouter.post('/games/:id/save', auth('player'), saveGame);
  *
  * /library:
  *   get:
- *     description: Gets user's library of games 
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
+ *     description: Gets players library of games 
  *     produces:
  *       - application/json
  *     responses:
