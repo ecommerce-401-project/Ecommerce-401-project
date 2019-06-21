@@ -7,9 +7,98 @@ const auth = require('../auth/middleware');
 const publisher = require('../models/publisher-repo');
 const gameRepo = require('../models/games-repo');
 // routes
+
+/**
+ * @swagger
+ * /games:
+ *   post:
+ *     description: Creates a new game
+ *     produces:
+ *      - application/json
+ *     parameters:
+ *     - name: name
+ *       in: query
+ *       description: Name of the game
+ *       required: true
+ *       schema:
+ *         type: string
+ *     - name: genre
+ *       in: query
+ *       description: Genre of the game
+ *       required: true
+ *       schema:
+ *         type: string
+ *     - name: creator
+ *       in: query
+ *       description: Who created the game
+ *       required: true
+ *       schema:
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Returns the newly created game
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
+
 publisherRouter.post('/games', auth('publisher'), createGame);
+
+/**
+ * @swagger
+ * /games/:id:
+ *   delete:
+ *     description: Publisher can delete games they created
+ *     produces:
+ *      - application/json
+ *     parameters:
+ *     - name: id
+ *       type: string
+ *       required: true
+ *       schema:
+ *        in: path
+ *     responses:
+ *       204:
+ *         description: Deletes a publishers game
+ */
+
 publisherRouter.delete('/games/:id', auth('publisher'), deleteGame);
+
+/**
+ * @swagger
+ * /publisher/games/unpublished:
+ *   get:
+ *     description: Gets all unpublished  games created by current publisher
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: Returns an array of all unpublished games made by current publisher
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
+
 publisherRouter.get('/publisher/games/unpublished', auth('publisher'),getUnpublishedLibrary);
+
+/**
+ * @swagger
+ * /publisher/games/published:
+ *   get:
+ *     description: Gets all published  games created by current publisher
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: Returns an array of all published games made by current publisher
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
+
 publisherRouter.get('/publisher/games/published', auth('publisher'),getPublishedLibrary);
 //TO DO
 //Need a delete own games route
@@ -36,7 +125,7 @@ async function deleteGame(request, response, next) {
     
   } else {
     publisher.delete(request.params.id)
-      .then(result => response.status(200).json(result))
+      .then(() => response.sendStatus(204))
       .catch(next);
   }
 }
