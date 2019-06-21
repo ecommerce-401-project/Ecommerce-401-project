@@ -5,16 +5,12 @@ const express = require('express');
 const publisherRouter = (module.exports = new express.Router());
 const auth = require('../auth/middleware');
 const publisher = require('../models/publisher-repo');
-
+const gameRepo = require('../models/games-repo');
 // routes
 publisherRouter.post('/games', auth('publisher'), createGame);
 publisherRouter.delete('/games/:id', auth('publisher'), deleteGame);
-
-publisherRouter.get(
-  'publisher/games/:id',
-  auth('publisher'),
-  getPublisherLibrary
-);
+publisherRouter.get('/publisher/games/unpublished', auth('publisher'),getUnpublishedLibrary);
+publisherRouter.get('/publisher/games/published', auth('publisher'),getPublishedLibrary);
 //TO DO
 //Need a delete own games route
 //need get own games route
@@ -33,13 +29,26 @@ function createGame(req, res, next) {
     .catch(next);
 }
 
-function deleteGame(request, response, next) {
-  publisher.delete(request.params.id)
-    .then(result => response.status(200).json(result))
+async function deleteGame(request, response, next) {
+  let gameToDelete = await gameRepo.getById(request.params.id);
+  if(gameToDelete.publisher.toString() !== request.user._id.toString()) {
+    response.status(404).send('Game id does not match any owned by publisher');
+    
+  } else {
+    publisher.delete(request.params.id)
+      .then(result => response.status(200).json(result))
+      .catch(next);
+  }
+}
+function getUnpublishedLibrary(req, res, next) {
+  publisher.getUnpublishedGameLibrary(req.user._id)
+    .then(data => {
+      res.send(data);
+    })
     .catch(next);
 }
-function getPublisherLibrary(req, res, next) {
-  publisher.getGameLibrary(req.user._id)
+function getPublishedLibrary(req, res, next) {
+  publisher.getPublishedGameLibrary(req.user._id)
     .then(data => {
       res.send(data);
     })
