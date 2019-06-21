@@ -22,6 +22,8 @@ const authRouter = express.Router();
  *       password:
  *         type: string
  *         format: password
+ *       role:
+ *         type: string
  * 
  * /signup:
  *   post:
@@ -62,17 +64,20 @@ authRouter.post('/signup', (req, res, next) => {
  *
  * /signin:
  *   post:
- *     description: Signs in user
- *     requestBody:
- *       description: Allows user to sign in with a username and password
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/definitions/NewUser' 
- *         application/x-www-form-urlencoded:
- *           schema:
- *             $ref: '#/definitions/NewUser' 
+ *     description: Allows a user to signin
+ *     produces:
+ *      - application/json
+ *     parameters:
+ *       - name: username
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: password
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: OK
