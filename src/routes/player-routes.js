@@ -78,14 +78,11 @@ playerRouter.get('/games/:id', GameById);
 /**
  * @swagger
  *
- * /games/:id/save:
+ * /games/{id}/save:
  *   post:
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
- *     description: Saves game to users library 
- * /games/:id/save: 
- *    post:
  *     tags:
  *      - Player 
  *     description: Saves game to users library
@@ -110,7 +107,6 @@ playerRouter.post('/games/:id/save', auth('player'), saveGame);
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
- *     description: Gets players library of games 
  *     tags:
  *      - Player  
  *     description: Gets user's library of games

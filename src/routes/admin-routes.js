@@ -35,7 +35,6 @@ adminRouter.get('/admin', auth('admin'), getAll);
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
- *     description: Returns list of games
  *     tags:
  *      - Admin  
  *     description: Returns list of unpublished games.
@@ -57,7 +56,6 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
- *     description: Returns list of games
  *     tags:
  *      - Admin  
  *     description: Admin may publish an unpublished game. 
@@ -82,12 +80,10 @@ adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
 /** 
  * @swagger
  * /admin/delete-game:
- *   post:
+ *   delete:
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
- *     description: Returns list of games
- *   delete:
  *     tags:
  *      - Admin 
  *     description: Admin can delete a game. 
