@@ -18,19 +18,19 @@ const auth = require('../../src/auth/middleware');
  *     properties:
  *       name:
  *         type: string
- *         description:
+ *         description: Title of game
  *       genre:
  *         type: string
- *         description:
+ *         description: Type of game
  *       creator:
  *         type: string
- *         description:
+ *         description: Who made the game
  *       publisher:
  *         type: string
- *         description: 
+ *         description:  Who published the game
  *       published:
  *         type: boolean
- *         description:
+ *         description: Is the game published 
  * /games:
  *   get:
  *     description: Returns list of games
@@ -46,11 +46,62 @@ const auth = require('../../src/auth/middleware');
  */
 playerRouter.get('/games', getAllPublishedGames);
 
+/**
+ * @swagger
+ *
+ * /games/:id:
+ *   get:
+ *     description: Returns a game by id
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         schema:
+ *           type: array
+ *           $ref: '#/definitions/Game'
+ */
 playerRouter.get('/games/:id', GameById);
 
+/**
+ * @swagger
+ *
+ * /games/:id/save:
+ *   post:
+ *     description: Saves game to users library 
+ *     parameters:
+ *       - name: id
+ *         in:  path 
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Success
+ */
 playerRouter.post('/games/:id/save', auth('player'), saveGame);
 // playerRouter.post('/games/:id/signin', auth('player'), signIn);
 
+/**
+ * @swagger
+ *
+ * /library:
+ *   get:
+ *     description: Gets user's library of games 
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: OK
+ *         schema:
+ *           type: array
+ */
 playerRouter.get('/library', auth('player'), getLibrary);
 playerRouter.delete('/library', auth('player'), deleteFromLibary);
 
@@ -80,12 +131,13 @@ function GameById(req, res, next) {
     .catch(next);
 }
 function saveGame(req, res, next) {
+  console.log('req.params.id', req.params.id);
   if (!req.params.id || req.params.id.toString().length !== 24) {
     res.send(404);
   } else {
     UserRepo.saveGame(req.user, req.params.id)
       .then(() => {
-        // res.status(204);
+        res.sendStatus(204);
         res.send('game added!');
       })
       .catch(next);
