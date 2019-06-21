@@ -70,7 +70,11 @@ authRouter.post('/signup', (req, res, next) => {
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
- *     description: Signs in user
+ *     tags:
+ *     - Authentication
+ *     description: Allows a user to signin
+ *     produces:
+ *      - application/json
  *     requestBody:
  *       description: Allows user to sign in with a username and password
  *       required: true
@@ -81,22 +85,6 @@ authRouter.post('/signup', (req, res, next) => {
  *         application/x-www-form-urlencoded:
  *           schema:
  *             $ref: '#/definitions/NewUser' 
- *     tags:
- *     - Authentication
- *     description: Allows a user to signin
- *     produces:
- *      - application/json
- *     parameters:
- *       - name: username
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *       - name: password
- *         in: path
- *         required: true
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         description: OK
