@@ -61,22 +61,21 @@ authRouter.post('/signup', (req, res, next) => {
  * @swagger
  *
  * /signin:
- *   get:
- *     description: Returns a game by id
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: string
+ *   post:
+ *     description: Signs in user
+ *     requestBody:
+ *       description: testing out description
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/NewUser' 
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             $ref: '#/definitions/NewUser' 
  *     responses:
  *       200:
  *         description: OK
- *         schema:
- *           type: array
- *           $ref: '#/definitions/Game'
  */
 authRouter.post('/signin', auth(), (req, res) => {
   res.cookie('auth', req.token);
