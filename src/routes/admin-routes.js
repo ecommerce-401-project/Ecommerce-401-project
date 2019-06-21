@@ -14,6 +14,8 @@ const auth = require('../../src/auth/middleware');
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
+ *     tags:
+ *      - Admin 
  *     description: Returns list of games
  *     produces:
  *      - application/json
@@ -34,11 +36,14 @@ adminRouter.get('/admin', auth('admin'), getAll);
  *     - BasicAuth: []
  *     - BearerAuth: []
  *     description: Returns list of games
+ *     tags:
+ *      - Admin  
+ *     description: Returns list of unpublished games.
  *     produces:
  *      - application/json
  *     responses:
  *       200:
- *         description: Returns a list of published games
+ *         description: Success  
  *         schema: 
  *           type: array
  *           items: 
@@ -47,12 +52,15 @@ adminRouter.get('/admin', auth('admin'), getAll);
 adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
 /** 
  * @swagger
- * /admin/approve-game:
+ * /admin/approve-game/{id}:
  *   post:
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
  *     description: Returns list of games
+ *     tags:
+ *      - Admin  
+ *     description: Admin may publish an unpublished game. 
  *     produces:
  *      - application/json
  *     parameters:
@@ -63,7 +71,7 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
  *           description: id to be deleted
  *     responses:
  *       200:
- *         description: Returns a list of published games
+ *         description: Success
  *         schema: 
  *           type: array
  *           items: 
@@ -79,6 +87,10 @@ adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
  *     - BasicAuth: []
  *     - BearerAuth: []
  *     description: Returns list of games
+ *   delete:
+ *     tags:
+ *      - Admin 
+ *     description: Admin can delete a game. 
  *     produces:
  *      - application/json
  *     parameters:
@@ -86,10 +98,10 @@ adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
  *         name: id
  *         schema:
  *           type: string
- *           description: id to be deleted
+ *           description: id
  *     responses:
  *       200:
- *         description: Returns a list of published games
+ *         description: Success
  *         schema: 
  *           type: array
  *           items: 

@@ -32,6 +32,8 @@ const gameRepo = require('../models/games-repo');
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
+ *     tags:
+ *     - Publisher
  *     description: Creates a new game
  *     produces:
  *      - application/json
@@ -65,6 +67,8 @@ publisherRouter.post('/games', auth('publisher'), createGame);
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
+ *     tags:
+ *     - Publisher 
  *     description: Publisher can delete games they created
  *     produces:
  *      - application/json
@@ -88,6 +92,8 @@ publisherRouter.delete('/games/:id', auth('publisher'), deleteGame);
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
+ *     tags:
+ *     - Publisher
  *     description: Gets all unpublished  games created by current publisher
  *     produces:
  *      - application/json
@@ -109,6 +115,8 @@ publisherRouter.get('/publisher/games/unpublished', auth('publisher'),getUnpubli
  *     security:
  *     - BasicAuth: []
  *     - BearerAuth: []
+ *     tags:
+ *     - Publisher
  *     description: Gets all published  games created by current publisher
  *     produces:
  *      - application/json

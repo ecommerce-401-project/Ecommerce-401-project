@@ -30,19 +30,21 @@ const auth = require('../../src/auth/middleware');
  *         description:  Who published the game
  *       published:
  *         type: boolean
- *         description: Is the game published 
+ *         description: Is the game published
  * /games:
  *   get:
  *     security: []
+ *     tags:
+ *     - Public
  *     description: Returns list of games
  *     produces:
  *      - application/json
  *     responses:
  *       200:
  *         description: Returns a list of published games
- *         schema: 
+ *         schema:
  *           type: array
- *           items: 
+ *           items:
  *             $ref: '#/definitions/Game'
  */
 playerRouter.get('/games', getAllPublishedGames);
@@ -53,6 +55,8 @@ playerRouter.get('/games', getAllPublishedGames);
  * /games/:id:
  *   get:
  *     security: []
+ *     tags:
+ *     - Public
  *     description: Returns a game by id
  *     produces:
  *       - application/json
@@ -80,9 +84,14 @@ playerRouter.get('/games/:id', GameById);
  *     - BasicAuth: []
  *     - BearerAuth: []
  *     description: Saves game to users library 
+ * /games/:id/save: 
+ *    post:
+ *     tags:
+ *      - Player 
+ *     description: Saves game to users library
  *     parameters:
  *       - name: id
- *         in:  path 
+ *         in:  path
  *         required: true
  *         schema:
  *           type: string
@@ -102,6 +111,9 @@ playerRouter.post('/games/:id/save', auth('player'), saveGame);
  *     - BasicAuth: []
  *     - BearerAuth: []
  *     description: Gets players library of games 
+ *     tags:
+ *      - Player  
+ *     description: Gets user's library of games
  *     produces:
  *       - application/json
  *     responses:
@@ -111,8 +123,25 @@ playerRouter.post('/games/:id/save', auth('player'), saveGame);
  *           type: array
  */
 playerRouter.get('/library', auth('player'), getLibrary);
+/**
+ * @swagger
+ *
+ * /games/:id/save: 
+ *    delete:
+ *     tags:
+ *      - Player 
+ *     description: Saves game to users library
+ *     parameters:
+ *       - name: id
+ *         in:  path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Success
+ */
 playerRouter.delete('/library', auth('player'), deleteFromLibary);
-
 
 function getAllPublishedGames(req, res, next) {
   game
@@ -160,8 +189,7 @@ function getLibrary(req, res, next) {
 }
 
 function deleteFromLibary(req, res, next) {
-  UserRepo
-    .deleteFromLib(req.params.id, game.id)
+  UserRepo.deleteFromLib(req.params.id, game.id)
     .then(data => {
       res.status(200).json(data);
     })
