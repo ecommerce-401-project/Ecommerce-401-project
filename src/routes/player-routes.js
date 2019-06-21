@@ -97,7 +97,6 @@ playerRouter.get('/games/:id', GameById);
  *         description: Success
  */
 playerRouter.post('/games/:id/save', auth('player'), saveGame);
-// playerRouter.post('/games/:id/signin', auth('player'), signIn);
 
 /**
  * @swagger
@@ -174,7 +173,6 @@ function saveGame(req, res, next) {
     UserRepo.saveGame(req.user, req.params.id)
       .then(() => {
         res.sendStatus(204);
-        res.send('game added!');
       })
       .catch(next);
   }
