@@ -7,10 +7,74 @@ const admin = require('../models/admin-repo');
 const auth = require('../../src/auth/middleware');
 
 // routes
+/** 
+ * @swagger
+ * /admin:
+ *   get:
+ *     description: Returns list of games
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: Returns a list of published games
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
 adminRouter.get('/admin', auth('admin'), getAll);
+/** 
+ * @swagger
+ * /admin/unpublished:
+ *   get:
+ *     description: Returns list of games
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: Returns a list of published games
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
 adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
+/** 
+ * @swagger
+ * /admin/approve-game:
+ *   post:
+ *     description: Returns list of games
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: Returns a list of published games
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
 adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
-adminRouter.delete('/admin/delete-game/:id', auth('admin'),  deleteGame);
+/** 
+ * @swagger
+ * /admin/delete-game:
+ *   post:
+ * parameters:
+ *- in: path
+ * name: id   # Note the name is the same as in the path
+ * required: true
+ *     description: Returns list of games
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: Returns a list of published games
+ *         schema: 
+ *           type: array
+ *           items: 
+ *             $ref: '#/definitions/Game'
+ */
+adminRouter.delete('/admin/delete-game/:id', auth('admin'), deleteGame);
 
 // route functions
 function getAll(req, res, next) {
