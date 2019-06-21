@@ -11,6 +11,9 @@ const auth = require('../../src/auth/middleware');
  * @swagger
  * /admin:
  *   get:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     tags:
  *      - Admin 
  *     description: Returns list of games
@@ -29,6 +32,9 @@ adminRouter.get('/admin', auth('admin'), getAll);
  * @swagger
  * /admin/unpublished:
  *   get:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     tags:
  *      - Admin  
  *     description: Returns list of unpublished games.
@@ -47,6 +53,9 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
  * @swagger
  * /admin/approve-game/{id}:
  *   post:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     tags:
  *      - Admin  
  *     description: Admin may publish an unpublished game. 
@@ -72,6 +81,9 @@ adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
  * @swagger
  * /admin/delete-game:
  *   delete:
+ *     security:
+ *     - BasicAuth: []
+ *     - BearerAuth: []
  *     tags:
  *      - Admin 
  *     description: Admin can delete a game. 
