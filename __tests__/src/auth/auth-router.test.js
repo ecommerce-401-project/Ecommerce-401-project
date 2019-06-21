@@ -20,7 +20,7 @@ describe('auth router test', () => {
     const token = 123456789;
     await mockrequest
       .post('/signin')
-      .set('Authorization', `basic ${token}`)
+      .set('Authorization', `Bearer ${token}`)
       .expect(401);
   });
 
