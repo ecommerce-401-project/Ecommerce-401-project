@@ -19,16 +19,10 @@ const options = {
     },
   },
   // Path to the API docs
-  apis: [`${__dirname}/routes/*.js`],
+  apis: [`${__dirname}/**/routes/*.js`],
 };
 
 // Initialize swagger-jsdoc -> returns validated swagger spec in json format
-const swaggerSpec = swaggerJSDoc(options);
-app.get('/api/swagger.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +30,18 @@ app.use(require('./routes/player-routes'));
 app.use(require('./routes/publisher-routes'));
 app.use(require('./routes/admin-routes'));
 app.use(require('./auth/routes/auth-router'));
+
+const swaggerSpec = swaggerJSDoc(options);
+app.get('/api/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/', (req, res) => res.redirect('/api'));
+
+
+
+
 
 app.use(notFound);
 app.use(errorHandler);

@@ -45,7 +45,7 @@ adminRouter.get('/admin', auth('admin'), getAll);
 adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
 /** 
  * @swagger
- * /admin/approve-game:
+ * /admin/approve-game/{id}:
  *   post:
  *     tags:
  *      - Admin  

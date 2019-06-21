@@ -56,7 +56,7 @@ describe('Publisher Routes', () => {
     await mockRequest
       .delete(`/games/${result.body._id}`)
       .set('Authorization', `Bearer ${publisher.generateToken()}`)
-      .expect(200);
+      .expect(204);
 
     await mockRequest.get(`/games/${result.body._id}`).expect(404);
   });
