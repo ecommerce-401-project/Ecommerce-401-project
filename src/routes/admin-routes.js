@@ -41,7 +41,7 @@ adminRouter.get('/admin', auth('admin'), getAll);
 adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
 /** 
  * @swagger
- * /admin/approve-game:
+ * /admin/approve-game/{id}:
  *   post:
  *     description: Returns list of games
  *     produces:
@@ -64,8 +64,8 @@ adminRouter.get('/admin/unpublished', auth('admin'), getAllUnPublished);
 adminRouter.post('/admin/approve-game/:id', auth('admin'), approveGame);
 /** 
  * @swagger
- * /admin/delete-game:
- *   post:
+ * /admin/delete-game/{id}:
+ *   delete:
  *     description: Returns list of games
  *     produces:
  *      - application/json
