@@ -9,7 +9,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const app = express();
 app.use(
   cors({
-    exposedHeaders: ['Content-Length', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'Authorization', 'Token'],
   })
 );
 app.use(morgan('dev'));
