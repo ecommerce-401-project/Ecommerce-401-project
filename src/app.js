@@ -7,7 +7,10 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://localhost:3000',
+  exposedHeaders: ['Content-Length', 'Authorization'],
+}));
 app.use(morgan('dev'));
 
 const options = {
