@@ -42,21 +42,21 @@ module.exports = role => (req, res, next) => {
   function _authError() {
     next({
       status: 401,
-      statusMessage: 'Unauthorized',
+      statusMessage: 'Invalid Username/Password',
       message: 'Invalid Username/Password',
     });
   }
   function _noHeaders() {
     next({
       status: 401,
-      statusMessage: 'Unauthorized',
+      statusMessage: 'no headers',
       message: 'No Headers',
     });
   }
   function _NotAuthorized() {
     next({
       status: 401,
-      statusMessage: 'Unauthorized',
+      statusMessage: 'no role found',
       message: 'No Role Found',
     });
   }
