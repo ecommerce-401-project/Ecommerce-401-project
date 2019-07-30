@@ -8,22 +8,21 @@ require('./role-schema');
 require('../models/games-schema');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({ 
-  username: {type: String, required:true, unique:true},
-  password: {type: String, required:true},
-  gameLibrary: [{ type: Schema.ObjectId, ref: 'games' }],
-  email: {type: String, lowercase:true},
-  role: {
-    type: String,
-    required: true,
-    default: 'player',
-    enum: ['admin', 'publisher', 'player'],
+const userSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    gameLibrary: [{ type: Schema.ObjectId, ref: 'games' }],
+    email: { type: String, lowercase: true },
+    role: {
+      type: String,
+      // required: true,
+      default: 'player',
+      enum: ['admin', 'publisher', 'player'],
+    },
   },
-},
-{ toObject: { virtuals: true }, toJSON: { virtuals: true } }
+  { toObject: { virtuals: true }, toJSON: { virtuals: true } }
 );
-
-
 
 userSchema.pre('save', function(next) {
   bcrypt
@@ -74,4 +73,3 @@ userSchema.methods.is = function(role) {
 };
 
 module.exports = mongoose.model('users', userSchema);
-
