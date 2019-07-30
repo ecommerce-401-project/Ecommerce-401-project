@@ -122,7 +122,7 @@ playerRouter.get('/library', auth('player'), getLibrary);
 /**
  * @swagger
  *
- * /games/:id/save: 
+ * /library: 
  *    delete:
  *     security:
  *     - BasicAuth: []
