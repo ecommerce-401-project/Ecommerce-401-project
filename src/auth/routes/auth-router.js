@@ -24,7 +24,10 @@ authRouter.post('/signup', (req, res, next) => {
 });
 
 authRouter.post('/signin', auth(), (req, res) => {
+  res.set('token', req.token);
   res.cookie('auth', req.token);
-  res.send(req.token);
+  res.status(200).json({
+    username: req.user.username,
+  });
 });
 module.exports = authRouter;
