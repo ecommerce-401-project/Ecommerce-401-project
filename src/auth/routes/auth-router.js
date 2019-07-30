@@ -23,7 +23,7 @@ authRouter.post('/signup', (req, res, next) => {
     .catch(next);
 });
 
-authRouter.post('/signin', auth, (req, res) => {
+authRouter.post('/signin', auth(), (req, res) => {
   res.cookie('auth', req.token);
   res.send(req.token);
 });
