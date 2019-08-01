@@ -30,6 +30,9 @@ afterAll(() => {
 const mockRequest = supergoose.server(server);
 
 describe('Publisher Routes', () => {
+
+  afterAll(() => setTimeout(5000));
+  
   it('returns a 200 for a post request', () => {
     return mockRequest
       .post('/games')

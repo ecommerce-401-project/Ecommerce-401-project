@@ -32,6 +32,9 @@ beforeAll(async () => {
 });
 
 describe('the user repo', () => {
+
+  afterAll(() => setTimeout(5000));
+
   it('can save game to user', async () => {
     //arrange
     expect(user.gameLibrary.toObject()).toEqual([]);
