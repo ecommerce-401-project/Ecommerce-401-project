@@ -4,9 +4,13 @@ const publisher = require('../../../src/models/publisher-repo.js');
 const game = require('../../../src/models/games-repo.js');
 const admin = require('../../../src/models/admin-repo.js');
 
+beforeAll(supergoose.startDB);
+afterAll(supergoose.stopDB);
+
 describe('Data-modeling', () => {
-  beforeAll(supergoose.startDB);
-  afterAll(supergoose.stopDB);
+
+  afterAll(() => setTimeout(5000));
+  
   it('should add a new game', async () => {
     var result = await publisher.create({
       name: 'Pac Man',

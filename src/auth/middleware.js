@@ -3,7 +3,8 @@
 const User = require('./user-schema');
 
 module.exports = role => (req, res, next) => {
-  if (!req.headers.authorization) return _headerError();
+
+  if (!req.headers.authorization) return _noHeaders();
 
   let [authType, authString] = req.headers.authorization.split(' ');
 
@@ -18,7 +19,7 @@ module.exports = role => (req, res, next) => {
 
   async function _authenticate(user) {
     if (!user) return _authError();
-    if (!user.is(role)) return _authError();
+    if (!user.is(role)) return _NotAuthorized();
 
     req.user = user;
     req.token = user.generateToken();
@@ -42,7 +43,7 @@ module.exports = role => (req, res, next) => {
   function _authError() {
     next({
       status: 401,
-      statusMessage: 'Unauthorized',
+      statusMessage: 'Invalid Username/Password',
       message: 'Invalid Username/Password',
     });
   }
@@ -59,6 +60,7 @@ module.exports = role => (req, res, next) => {
       status: 404,
       statusMessage: 'switch error',
       message: 'switch error',
+
     });
   }
 };

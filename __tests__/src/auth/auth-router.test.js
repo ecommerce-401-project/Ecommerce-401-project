@@ -6,6 +6,9 @@ beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
 
 describe('auth router test', () => {
+
+  afterAll(() => setTimeout(5000));
+  
   it('creates a user', async () => {
     await mockrequest
       .post('/signup')

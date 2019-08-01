@@ -141,7 +141,7 @@ function createGame(req, res, next) {
   publisher
     .create({
       ...req.body,
-      published: false,
+      published: true,
       publisher: req.user._id,
     })
     .then(result => res.status(200).json(result))
