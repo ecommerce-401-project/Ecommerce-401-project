@@ -7,7 +7,11 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ['Content-Length', 'Authorization', 'Token'],
+  })
+);
 app.use(morgan('dev'));
 
 const options = {
@@ -54,10 +58,6 @@ app.get('/api/swagger.json', (req, res) => {
 });
 app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get('/', (req, res) => res.redirect('/api'));
-
-
-
-
 
 app.use(notFound);
 app.use(errorHandler);

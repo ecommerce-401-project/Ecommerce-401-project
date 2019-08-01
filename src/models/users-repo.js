@@ -22,8 +22,10 @@ class UserRepo {
   static getById(id) {
     return User.findById(id);
   }
-  static getGameLibrary(id) {
-    return User.find(id.gameLibrary);
+  static async getGameLibrary(id) {
+    let user = await User.findById(id);
+    await user.populate('gameLibrary').execPopulate();
+    return user.gameLibrary;
   }
   static async deleteFromLib(user, gameId) {
     return User.findOneAndUpdate(
