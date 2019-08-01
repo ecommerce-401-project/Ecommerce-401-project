@@ -3,7 +3,7 @@
 const User = require('./user-schema');
 
 module.exports = role => (req, res, next) => {
-  if (!req.headers.authorization) return _authError();
+  if (!req.headers.authorization) return _headerError();
 
   let [authType, authString] = req.headers.authorization.split(' ');
 
@@ -13,7 +13,7 @@ module.exports = role => (req, res, next) => {
   case 'bearer':
     return _authBearer(authString);
   default:
-    return _authError();
+    return _authSwitchError();
   }
 
   async function _authenticate(user) {
@@ -44,6 +44,21 @@ module.exports = role => (req, res, next) => {
       status: 401,
       statusMessage: 'Unauthorized',
       message: 'Invalid Username/Password',
+    });
+  }
+
+  function _headerError() {
+    next({
+      status: 405,
+      statusMessage: 'No request headers',
+      message: 'No request header',
+    });
+  }
+  function _authSwitchError() {
+    next({
+      status: 404,
+      statusMessage: 'switch error',
+      message: 'switch error',
     });
   }
 };
