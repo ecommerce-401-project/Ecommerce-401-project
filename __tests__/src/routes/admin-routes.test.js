@@ -11,6 +11,9 @@ const mockRequest = supergoose.server(server);
 var adminUser;
 var adminUser2;
 describe('Admin Routes', () => {
+
+  afterAll(() => setTimeout(5000));
+  
   it('it gives back all items', async () => {
     adminUser = await new User({
       username: 'Lily',
