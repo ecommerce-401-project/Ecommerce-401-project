@@ -3,7 +3,7 @@
 const User = require('./user-schema');
 
 module.exports = role => (req, res, next) => {
-  if (!req.headers.authorization) return _authError();
+  if (!req.headers.authorization) return _noHeaders();
 
   let [authType, authString] = req.headers.authorization.split(' ');
 
@@ -18,7 +18,7 @@ module.exports = role => (req, res, next) => {
 
   async function _authenticate(user) {
     if (!user) return _authError();
-    if (!user.is(role)) return _authError();
+    if (!user.is(role)) return _NotAuthorized();
 
     req.user = user;
     req.token = user.generateToken();
@@ -42,8 +42,22 @@ module.exports = role => (req, res, next) => {
   function _authError() {
     next({
       status: 401,
-      statusMessage: 'Unauthorized',
+      statusMessage: 'Invalid Username/Password',
       message: 'Invalid Username/Password',
+    });
+  }
+  function _noHeaders() {
+    next({
+      status: 401,
+      statusMessage: 'no headers',
+      message: 'No Headers',
+    });
+  }
+  function _NotAuthorized() {
+    next({
+      status: 401,
+      statusMessage: 'no role found',
+      message: 'No Role Found',
     });
   }
 };
