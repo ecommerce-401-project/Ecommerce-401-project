@@ -16,7 +16,7 @@ class UserRepo {
       return;
     } else {
       user.gameLibrary.push(gameId);
-      return user.save();
+      return await user.save();
     }
   }
   static getById(id) {

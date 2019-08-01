@@ -44,17 +44,24 @@ describe('Player Routes', () => {
   });
 
   it('deletes a game from a users library', async () => {
+    let token = user.generateToken();
     await mockRequest
-      .post('/games/5d405898f63ed10017b440ba/save')
-      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .post(`/games/${game._id}/save`)
+      .set('Authorization', `Bearer ${token}`)
       .expect(204);
     await mockRequest
-      .delete('/library/5d405898f63ed10017b440ba')
-      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .get('/library')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(res =>{
+        expect(res.body).not.toEqual([]);
+      });
+    await mockRequest
+      .delete(`/library/${game._id}`)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
     return await mockRequest
       .get('/library')
-      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .set('Authorization', `Bearer ${token}`)
       .expect([]);
   });
 });
