@@ -17,9 +17,10 @@ module.exports = role => (req, res, next) => {
   }
 
   async function _authenticate(user) {
+    console.log('_authenticate', user);
     if (!user) return _authError();
     if (!user.is(role)) return _NotAuthorized();
-
+    
     req.user = user;
     req.token = user.generateToken();
     next();
@@ -35,8 +36,8 @@ module.exports = role => (req, res, next) => {
     let authString = base64Buffer.toString();
     let [username, password] = authString.split(':');
     let auth = { username, password };
-
-    return User.authenticateBasic(auth).then(user => _authenticate(user));
+    console.log(auth);
+    return User.authenticateBasic(auth).then(user => _authenticate(user)).catch(console.error);
   }
 
   function _authError() {

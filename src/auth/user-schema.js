@@ -11,7 +11,14 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: {
+      type: String,
+      required: true,
+      set: function(password) {
+        this._password = this.password;
+        return password;
+      },
+    },
     gameLibrary: [{ type: Schema.ObjectId, ref: 'games' }],
     email: { type: String, lowercase: true },
     role: {
@@ -25,15 +32,19 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', function(next) {
-  bcrypt
-    .hash(this.password, 10)
-    .then(hashedPassword => {
-      this.password = hashedPassword;
-      next();
-    })
-    .catch(error => {
-      throw error;
-    });
+  if (this.isModified('password')) {
+    bcrypt
+      .hash(this.password, 10)
+      .then(hashedPassword => {
+        this.password = hashedPassword;
+        next();
+      })
+      .catch(error => {
+        throw error;
+      });
+  } else {
+    next();
+  }
 });
 
 userSchema.statics.authenticateToken = async function(token) {
@@ -46,11 +57,17 @@ userSchema.statics.authenticateToken = async function(token) {
   }
 };
 
-userSchema.statics.authenticateBasic = function(auth) {
+userSchema.statics.authenticateBasic = async function(auth) {
   let query = { username: auth.username };
-  return this.findOne(query).then(
-    user => user && user.comparePassword(auth.password)
-  );
+  let user = await this.findOne(query);
+  if (!user) {
+    console.log('user not found', query);
+    return user;
+  }
+  console.log('user found', user);
+  let user2 = await user.comparePassword(auth.password);
+  console.log('password match', user2);
+  return user2;
 };
 
 // Compare a plain text password against the hashed one we have saved
