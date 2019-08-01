@@ -139,7 +139,7 @@ playerRouter.get('/library', auth('player'), getLibrary);
  *       204:
  *         description: Success
  */
-playerRouter.delete('/library', auth('player'), deleteFromLibary);
+playerRouter.delete('/library/:id', auth('player'), deleteFromLibary);
 
 function getAllPublishedGames(req, res, next) {
   game
