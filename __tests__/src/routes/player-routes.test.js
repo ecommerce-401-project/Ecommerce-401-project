@@ -39,9 +39,13 @@ describe('Player Routes', () => {
       .post('/games/5d405898f63ed10017b440ba/save')
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .expect(204);
-    return await mockRequest
+    await mockRequest
       .delete('/library/5d405898f63ed10017b440ba')
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .expect(200);
+    return await mockRequest
+      .get('/library')
+      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .expect([]);
   });
 });
