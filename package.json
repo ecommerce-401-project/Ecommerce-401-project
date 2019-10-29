@@ -25,7 +25,7 @@
     "jest": "^24.8.0",
     "jsonwebtoken": "^8.4.0",
     "mongodb-memory-server": "^5.1.5",
-    "mongoose": "^5.4.2",
+    "mongoose": "^5.7.5",
     "mongoose-schema-jsonschema": "^1.2.1",
     "morgan": "^1.9.1",
     "supertest": "^3.3.0",
