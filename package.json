@@ -23,7 +23,7 @@
     "eslint": "^5.16.0",
     "express": "^4.16.4",
     "jest": "^24.8.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "mongodb-memory-server": "^5.1.5",
     "mongoose": "^5.4.2",
     "mongoose-schema-jsonschema": "^1.2.1",
